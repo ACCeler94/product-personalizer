@@ -19,6 +19,20 @@ const Product = props => {
     return props.basePrice + sizeObj.additionalPrice
   }
 
+  const logCart = (e) => {
+    e.preventDefault();
+
+    console.log(`
+                Summary
+                ===================
+                Name: ${props.title}
+                Price: ${getPrice()}
+                Size: ${currentSize}
+                Color: ${currentColor}
+                `)
+  }
+
+
   return (
     <article className={styles.product}>
       <div className={styles.imageContainer}>
@@ -57,7 +71,7 @@ const Product = props => {
               })}
             </ul>
           </div>
-          <Button className={styles.button}>
+          <Button className={styles.button} handleClick={(e) => logCart(e)}>
             <span className="fa fa-shopping-cart" />
           </Button>
         </form>
