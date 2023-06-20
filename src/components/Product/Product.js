@@ -1,6 +1,6 @@
 import styles from './Product.module.scss';
 import PropTypes, { arrayOf } from 'prop-types';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import ProductImage from '../ProductImage/ProductImage';
 import ProductOptions from '../ProductOptions/ProductOptions';
 
@@ -13,11 +13,13 @@ const Product = props => {
 
   const prepareColorName = color => styles['color' + color[0].toUpperCase() + color.slice(1)];
 
-  const getPrice = () => {
-    const sizeObj = props.sizes.find(element => element.name === currentSize);
+  const getPrice = useMemo(() => {
+    return () => {
+      const sizeObj = props.sizes.find(element => element.name === currentSize);
 
-    return props.basePrice + sizeObj.additionalPrice
-  }
+      return props.basePrice + sizeObj.additionalPrice
+    }
+  }, [currentSize, props.basePrice, props.sizes])
 
   const logCart = (e) => {
     e.preventDefault();
